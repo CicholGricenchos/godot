@@ -97,6 +97,11 @@ Error ResourceFormatSaverPluginScript::save(const String &p_path, const RES &p_r
 	}
 	file->close();
 	memdelete(file);
+
+	if (ScriptServer::is_reload_scripts_on_save_enabled()) {
+		_language->reload_tool_script(p_resource, false);
+	}
+
 	return OK;
 }
 

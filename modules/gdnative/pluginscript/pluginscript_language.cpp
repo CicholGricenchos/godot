@@ -394,8 +394,10 @@ void PluginScriptLanguage::reload_all_scripts() {
 void PluginScriptLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
 #ifdef DEBUG_ENABLED
 	lock();
-	// TODO
+	// TODO: support soft reload and inheritance dependency reload if necessary
+	Ref<PluginScript> to_reload = p_script;
 	unlock();
+	to_reload->reload(p_soft_reload);
 #endif
 }
 

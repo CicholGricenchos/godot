@@ -219,10 +219,12 @@ Error PluginScript::reload(bool p_keep_state) {
 	_tool = manifest.is_tool;
 
 	Dictionary *members = (Dictionary *)&manifest.member_lines;
+	_member_lines.clear();
 	for (const Variant *key = members->next(); key != NULL; key = members->next(key)) {
 		_member_lines[*key] = (*members)[key];
 	}
 	Array *methods = (Array *)&manifest.methods;
+	_methods_info.clear();
 	for (int i = 0; i < methods->size(); ++i) {
 		Dictionary v = (*methods)[i];
 		MethodInfo mi = MethodInfo::from_dict(v);
@@ -236,12 +238,14 @@ Error PluginScript::reload(bool p_keep_state) {
 		}
 	}
 	Array *signals = (Array *)&manifest.signals;
+	_signals_info.clear();
 	for (int i = 0; i < signals->size(); ++i) {
 		Variant v = (*signals)[i];
 		MethodInfo mi = MethodInfo::from_dict(v);
 		_signals_info[mi.name] = mi;
 	}
 	Array *properties = (Array *)&manifest.properties;
+	_properties_info.clear();
 	for (int i = 0; i < properties->size(); ++i) {
 		Dictionary v = (*properties)[i];
 		PropertyInfo pi = PropertyInfo::from_dict(v);
